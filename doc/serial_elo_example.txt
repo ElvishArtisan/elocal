@@ -1,0 +1,31 @@
+#
+# Example XF86Config configuration for serial-based ELO touchscreens.
+#
+
+#
+# Add a complete 'InputDevice' section.  Get the values for 'MaxX', 
+# 'MinX', 'MaxY' and 'MinY' from the calibration utility.
+# 
+Section "InputDevice"
+  Driver       "elographics"
+  Identifier   "Touchscreen[0]"
+  Option       "screenno" "0"
+  Option       "ButtonNumber" "1"
+  Option       "ButtonThreshold" "17"
+  Option       "Device" "/dev/ttyS1"
+  Option       "InputFashion" "Touchpanel"
+  Option       "MaxX" "22"
+  Option       "MinX" "4084"
+  Option       "MaxY" "224"
+  Option       "MinY" "4161"
+  Option       "Name" "ELO 2500S Touchscreen"
+  Option       "ReportingMode" "Scaled"
+  Option       "SendCoreEvents" "on"
+EndSection
+
+#
+# Add an 'InputDevice' statement to the 'ServerLayout' section.
+#
+Section "ServerLayout"
+  InputDevice  "Touchscreen[0]" "SendCoreEvents"
+EndSection

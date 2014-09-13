@@ -1,0 +1,97 @@
+## elocal.spec.in
+##
+##    A touchscreen calibration utility for ELO touch monitors.
+##    Copyright (C) 2002-2004  Fred Gleason <fredg@paravelsystems.com>
+##
+##    This program is free software; you can redistribute it and/or modify
+##    it under the terms of version 2 of the GNU General Public License as
+##    published by the Free Software Foundation;
+##
+##    This program is distributed in the hope that it will be useful,
+##    but WITHOUT ANY WARRANTY; without even the implied warranty of
+##    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##    GNU General Public License for more details.
+##
+##    You should have received a copy of the GNU General Public License
+##    along with this program; if not, write to the Free Software
+##    Foundation, Inc., 59 Temple Place, Suite 330, 
+##    Boston, MA  02111-1307  USA
+##
+
+Summary: A Calibration Utility for ELO IntelliTouch Touschscreen Monitors.
+Name: elocal
+Version: @VERSION@
+Release: @RPM_RELEASE@
+License: GPL
+Packager: Fred Gleason <fredg@paravelsystems.com>
+Group: Hardware/Other
+Source: ftp://ftp.salemradiolabs.com/pub/srlabs/elocal/elocal-@VERSION@.tar.gz
+BuildRoot: /var/tmp/elocal-@VERSION@
+
+
+%description
+Elocal is a utility for calibrating touchscreen monitors manufactured
+by ELO Touchsystems using IntelliTouch 2500S and 2500U controllers.
+
+%prep
+
+
+%setup
+
+
+%build
+./configure --prefix=@LOCAL_PREFIX@
+make
+
+
+%install
+rm -rf $RPM_BUILD_ROOT
+mkdir -p $RPM_BUILD_ROOT/@LOCAL_PREFIX@/bin
+cp elocal/.libs/elocal $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
+cp elomon/.libs/elomon $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
+mkdir -p $RPM_BUILD_ROOT/@LOCAL_PREFIX@/@ELO_LIB_PATH@
+cp lib/.libs/libelo_driver-@VERSION@.so $RPM_BUILD_ROOT@LOCAL_PREFIX@/@ELO_LIB_PATH@/
+cp lib/.libs/libelo_driver.a $RPM_BUILD_ROOT@LOCAL_PREFIX@/@ELO_LIB_PATH@/
+cp lib/.libs/libelo_driver.la $RPM_BUILD_ROOT@LOCAL_PREFIX@/@ELO_LIB_PATH@/
+
+%post
+ldconfig
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(-,root,root)
+@LOCAL_PREFIX@/bin/elocal
+@LOCAL_PREFIX@/bin/elomon
+@LOCAL_PREFIX@/@ELO_LIB_PATH@/libelo_driver-@VERSION@.so
+@LOCAL_PREFIX@/@ELO_LIB_PATH@/libelo_driver.a
+@LOCAL_PREFIX@/@ELO_LIB_PATH@/libelo_driver.la
+
+%doc AUTHORS
+%doc ChangeLog
+%doc COPYING 
+%doc INSTALL 
+%doc README 
+%doc doc/serial_elo_example.txt
+%doc doc/usb_elo_example.txt
+
+%changelog
+* Mon Dec 17 2007 Fred Gleason <fredg@paravelsystems.com>
+-- Added support for x86_64 architecture.
+* Tue Feb 14 2006 Fred Gleason <fredg@salemradiolabs.com>
+-- Altered the install section so as not to use 'make install'.
+* Wed Feb 08 2006 Fred Gleason <fredg@salemradiolabs.com>
+-- Altered install paths to use $prefix value from Autoconf.
+* Tue Feb 08 2005 Fred Gleason <fredg@salemradiolabs.com>
+-- Added 'doc/serial_elo_example.txt' and 'doc/usb_elo_example.txt'
+files.
+* Wed Oct 27 2004 Fred Gleason <fredg@salemradiolabs.com>
+-- Moved the binaries from /usr/local/sbin to /usr/local/bin.
+* Tue Oct 26 2004 Fred Gleason <fredg@salemradiolabs.com>
+-- Added 'ldconfig' to the %post rule.
+* Mon Oct 25 2004 Fred Gleason <fredg@salemradiolabs.com>
+-- Added dynamic library support.
+-- Added EloMon.
+* Thu Oct 14 2004 Fred Gleason <fredg@salemradiolabs.com>
+-- Initial spec file creation.

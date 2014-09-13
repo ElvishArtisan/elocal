@@ -1,0 +1,45 @@
+This is the README file for the EloCal package.
+
+This software comes with ABSOLUTELY NO WARRANTY.  See the file COPYING for
+details.
+
+EloCal is a utility for calibrating touchmonitors made by ELO
+Touchsystems using 'IntelliTouch' 2500S and 2500U controllers.  
+Specifically, the program can be used to determine the calibration 
+values to be inserted into the 'MinX=', 'MaxX=', 'MinY=' and 'MaxY=' 
+directives of an 'InputDevice' section of the XF86Config(5) file for 
+such a monitor.
+
+Please see the 'INSTALL' file for installation instructions.
+
+The package comes with two utilities:
+
+1) EloCal
+The calibration utility.  This can be invoked as follows:
+
+    elocal <device>
+
+where <device> is the name of the device file that references the
+touch screen controller.  For serial touchscreens (IntelliTouch 2500S
+controllers), this will be a tty device (e.g. '/dev/ttyS1').  For USB
+touchscreens (IntelliTouch 2500U), this will be one of the generic
+'input event' devices (e.g. '/dev/input/event0').
+
+
+2) EloMon
+A touchscreen event monitor.  This can be used to verify that a
+touchscreen is working properly.  It is invoked as follows:
+
+	    elomon <device> 
+
+where <device> is the name of the device file that references the
+touch screen controller.
+
+
+IMPORTANT NOTE:
+Be sure to disable any active touchscreen configuration in
+XF86Config(5) before running either of these utilities.  Failure to do
+so will produce inaccurate results. 
+
+
+Fred Gleason <fredg@paravelsystems.com>

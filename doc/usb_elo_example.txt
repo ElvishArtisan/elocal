@@ -1,0 +1,31 @@
+#
+# Example XF86Config configuration for USB-based ELO touchscreens.
+#
+
+#
+# Add a complete 'InputDevice' section.  Get the values for 'MaxX', 
+# 'MinX', 'MaxY' and 'MinY' from the calibration utility.
+# 
+Section "InputDevice"
+  Driver       "eloinput"
+  Identifier   "Touchscreen[0]"
+  Option       "screenno" "0"
+  Option       "ButtonNumber" "1"
+  Option       "ButtonThreshold" "17"
+  Option       "Device" "/dev/input/event3"
+  Option       "InputFashion" "Touchpanel"
+  Option       "MaxX" "38"
+  Option       "MinX" "4016"
+  Option       "MaxY" "3952"
+  Option       "MinY" "61"
+  Option       "Name" "ELO 2500U Touchscreen"
+  Option       "ReportingMode" "Scaled"
+  Option       "SendCoreEvents" "on"
+EndSection
+
+#
+# Add an 'InputDevice' statement to the 'ServerLayout' section.
+#
+Section "ServerLayout"
+  InputDevice  "Touchscreen[0]" "SendCoreEvents"
+EndSection

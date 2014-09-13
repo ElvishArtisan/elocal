@@ -1,0 +1,91 @@
+2004-10-14 Fred Gleason <fredg@salemradiolabs.com>
+	* Initial package creation
+2004-10-15 Fred Gleason <fredg@salemradiolabs.com>
+	* Added an RPM spec file in 'elocal.spec.in'.
+2004-10-15 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a '-b' command switch to elocal(8).
+	* Added a '-c' command switch to elocal(8).
+	* Created a 'lib/' directory for the EloDriver class.
+	* Added a 'TouchEvent' class in 'lib/touchevent.cpp'.
+	* Added the 'RTTYDevice' class from the libradio package in
+	'lib/rttydevice.cpp'.
+	* Removed the libradio and libvorbis dependencies.
+2004-10-15 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a new constructor method to TouchEvent.
+	* Added a 'data()' method to TouchEvent.
+2004-10-25 Fred Gleason <fredg@salemradiolabs.com>
+	* Added an 'Error' enum to 'EloDriver' in 'lib/elo_driver.h'.
+	* Added code to inform the user of the reason for an error in
+	'elocal/elocal.cpp'.
+	* Added code to inform the user of the reason for an error in
+	'elomon/elomon.cpp'.
+	* Incremented version to 0.1.0.
+2004-10-26 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'lib/elo_driver.cpp' that was causing SmartSet
+	packet detection to fail in certain circumstances.
+	* Added a call to ldconfig(8) to the %post rule in
+	'elocal.spec.in'.
+	* Incremented version to 0.1.1.
+2004-10-27 Fred Gleason <fredg@salemradiolabs.com>
+	* Turned off RAW_DUMP mode in 'lib/elo_driver.h'.
+2004-10-27 Fred Gleason <fredg@salemradiolabs.com>
+	* Moved the binary installation location from 'sbin' to 'bin'.
+	* Incremented the version 0.1.2.
+2005-02-02 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'lib/rttydevice.h' and 'lib/rttydevice.cpp' that
+	was causing the build to break.
+	* Modified the offset calibration code.
+2005-02-08 Fred Gleason <fredg@salemradiolabs.com>
+	* Modified the offset calibration code.
+2005-02-08 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'doc/serial_elo_example.txt' and 'doc/usb_elo_example.txt'
+	files.
+2005-02-08 Fred Gleason <fredg@salemradiolabs.com>
+	* Incremented the package version to 0.2.0.
+2005-03-14 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'enableWorkaround()' method to 'lib/elo_driver.cpp'.
+	* Added a '-W' switch to elomon(1).
+	* Added a '-W' switch to elocal(1).
+	* Incremented the package version to 0.3.0.
+2005-08-30 Fred Gleason <fredg@salemradiolabs.com>
+	* Added support for ELO USB Product Code 8 controllers.
+	* Incremented the package version to 0.4.0.
+2005-10-27 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a check to autodetect broken USB HID implementations in
+	'lib/elo_drvier.cpp'
+	* Added a third touch target in 'elocal'elocal.cpp' to allow the
+	HID autodetection to work.
+	* Incremented the package version to 0.5.0.
+2006-01-18 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed 'EloDriver' in 'lib/elo_driver.cpp' to work properly with
+	SuSE 10.0.
+2006-01-18 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'lib/elo_driver.cpp' that broke backward
+	compatibility to SuSE 9.2.
+2006-01-18 Fred Gleason <fredg@salemradiolabs.com>
+	* Updated the package version to 0.6.0.
+2006-02-08 Fred Gleason <fredg@salemradiolabs.com>
+	* Modified 'rivendell.spec.in' and 'make_slack.in' to use the
+	install paths provided by Autoconf.
+2006-02-14 Fred Gleason <fredg@salemradiolabs.com>
+	* Modified the 'make rpm' target in 'Makefile.am' to properly
+	clean up the RPM build tree after the build.
+	* Modified the 'make rpm' target in 'Makefile.am' to move the
+	finished RPMs to the top source directory.
+2006-02-15 Fred Gleason <fredg@salemradiolabs.com>
+	* Updated the package version to 0.6.1.
+2006-03-10 Fred Gleason <fredg@salemradiolabs.com>
+	* Added GPL disclaimers to the heads of 'Makefile.am',
+	'elomon/Makefile.am' and 'elocal/Makefile.am'.
+2006-06-15 Fred Gleason <fredg@salemradiolabs.com>
+	* Added USB Product Code 32 for the ELO ET1725L LCD
+	Touchmonitor.
+	* Incremented the package version to 0.6.2.
+2007-03-05 Fred Gleason <fredg@salemradiolabs.com>
+	* Updated the e-mail address in the copyright notices.
+2007-12-17 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'autoinclude.m4', 'get_target.sh' and 'get_distro.sh'
+	files.
+	* Added support for x86_64 architecture.
+2007-12-17 Fred Gleason <fredg@salemradiolabs.com>
+	* Incremented package version to 0.6.3.
