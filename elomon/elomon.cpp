@@ -157,21 +157,24 @@ MainWidget::MainWidget(QWidget *parent,const char *name)
   elo_driver->setName(qApp->argv()[qApp->argc()-1]);
   elo_driver->setSpeed(elo_speed);
   switch(elo_driver->open()) {
-      case EloDriver::NoFile:
-	QMessageBox::warning(this,"EloCal","Unable to open specified device!");
-	exiting=true;
-	return;
+  case EloDriver::Ok:
+    break;
 
-      case EloDriver::NoDevice:
-	QMessageBox::warning(this,"EloCal","Specified device does not exist!");
-	exiting=true;
-	return;
+  case EloDriver::NoFile:
+    QMessageBox::warning(this,"EloCal","Unable to open specified device!");
+    exiting=true;
+    return;
 
-      case EloDriver::NotTouchscreen:
-	QMessageBox::warning(this,"EloCal",
-			     "Specified device is not a touchscreen!");
-	exiting=true;
-	return;
+  case EloDriver::NoDevice:
+    QMessageBox::warning(this,"EloCal","Specified device does not exist!");
+    exiting=true;
+    return;
+
+  case EloDriver::NotTouchscreen:
+    QMessageBox::warning(this,"EloCal",
+			 "Specified device is not a touchscreen!");
+    exiting=true;
+    return;
   }
   connect(elo_driver,SIGNAL(touchPressEvent(TouchEvent *)),
 	  this,SLOT(touchPressData(TouchEvent *)));

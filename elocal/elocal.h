@@ -52,7 +52,6 @@ class MainWidget : public QWidget
   void touchEventData(TouchEvent *e);
  
  private:
-  bool CollectTarget(int xpos,int ypos,int *xpix,int *ypix);
   void ShowTarget(const QPoint pt);
   void HideTarget();
   QLabel *elo_target_label;

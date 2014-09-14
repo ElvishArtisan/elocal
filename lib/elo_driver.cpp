@@ -77,12 +77,6 @@ EloDriver::Error EloDriver::open()
   struct termios term;
   unsigned ev_version;
   struct input_id id;
-  struct input_absinfo absinfo;
-  struct utsname info;
-  int count=0;
-  int major;
-  int minor;
-  int offset;
 
   //
   // What kind of controller are we talking to?
@@ -144,13 +138,16 @@ void EloDriver::close()
 void EloDriver::timerData()
 {
   switch(elo_controller) {
-      case EloDriver::Elo2500S:
-	ReadTty();
-	break;
+  case EloDriver::Elo2500S:
+    ReadTty();
+    break;
 
-      case EloDriver::Elo2500U:
-	ReadInput();
-	break;
+  case EloDriver::Elo2500U:
+    ReadInput();
+    break;
+
+  case EloDriver::EloAuto:
+    break;
   }
 }
 
@@ -159,10 +156,10 @@ void EloDriver::ReadTty()
 {
   char buf[256];
   int n;
-  TouchEvent::Type type;
-  int xpos;
-  int ypos;
-  int zpos;
+  TouchEvent::Type type=TouchEvent::TouchUnknown;
+  int xpos=0;
+  int ypos=0;
+  int zpos=0;
   static int istate=0;
   TouchEvent *e=NULL;
 
@@ -172,86 +169,89 @@ void EloDriver::ReadTty()
       printf("Elo Code: 0x%02X\n",buf[i]&0xff);
 #endif  // ELO_DRIVER_RAW_DUMP
       switch(istate) {
-	  case 0:
-	    if(buf[i]==0x55) {
-	      istate=1;
-	    }
-	    else {
-	      istate=0;
-	    }
-	    break;
+      case 0:
+	if(buf[i]==0x55) {
+	  istate=1;
+	}
+	else {
+	  istate=0;
+	}
+	break;
 	    
-	  case 1:
-	    if(buf[i]==0x54) {
-	      istate=2;
-	    }
-	    else {
-	      istate=0;
-	    }
-	    break;
+      case 1:
+	if(buf[i]==0x54) {
+	  istate=2;
+	}
+	else {
+	  istate=0;
+	}
+	break;
 	    
-	  case 2:   // Touch Type
-	    switch(buf[i]&0x06) {
-		case 0x02:
-		  type=TouchEvent::TouchPress;
-		  break;
+      case 2:   // Touch Type
+	switch(buf[i]&0x06) {
+	case 0x02:
+	  type=TouchEvent::TouchPress;
+	  break;
 		  
-		case 0x04:
-		  type=TouchEvent::TouchRelease;
-		  break;
-		  
-		default:
-		  type=TouchEvent::TouchUnknown;
-		  break;
-	    }
-	    istate=3;
-	    break;
+	case 0x04:
+	  type=TouchEvent::TouchRelease;
+	  break;
+	  
+	default:
+	  type=TouchEvent::TouchUnknown;
+	  break;
+	}
+	istate=3;
+	break;
 	    
-	  case 3:
-	    xpos=0xff&buf[i];
-	    istate=4;
-	    break;
+      case 3:
+	xpos=0xff&buf[i];
+	istate=4;
+	break;
 	    
-	  case 4:	      
-	    xpos+=(256*(0xff&buf[i]));
-	    istate=5;
-	    break;
+      case 4:	      
+	xpos+=(256*(0xff&buf[i]));
+	istate=5;
+	break;
+    
+      case 5:
+	ypos=0xff&buf[i];
+	istate=6;
+	break;
 	    
-	  case 5:
-	    ypos=0xff&buf[i];
-	    istate=6;
-	    break;
+      case 6:
+	ypos+=(256*(0xff&buf[i]));
+	istate=7;
+	break;
 	    
-	  case 6:
-	    ypos+=(256*(0xff&buf[i]));
-	    istate=7;
-	    break;
-	    
-	  case 7:
-	    zpos=0xff&buf[i];
-	    istate=8;
-	    break;
+      case 7:
+	zpos=0xff&buf[i];
+	istate=8;
+	break;
 
-	  case 8:
-	    zpos+=(256*(0xff&buf[i]));
-	    istate=9;
-	    break;
+      case 8:
+	zpos+=(256*(0xff&buf[i]));
+	istate=9;
+	break;
 	    
-	  case 9:
-	    e=new TouchEvent(type,xpos,ypos,zpos);
-	    switch(type) {
-		case TouchEvent::TouchPress:
-		  emit touchPressEvent(e);
-		  break;
+      case 9:
+	e=new TouchEvent(type,xpos,ypos,zpos);
+	switch(type) {
+	case TouchEvent::TouchPress:
+	  emit touchPressEvent(e);
+	  break;
 
-		case TouchEvent::TouchRelease:
-		  emit touchReleaseEvent(e);
-		  break;
-	    }
-	    delete e;
-	    e=NULL;
-	    istate=0;
-	    break;
+	case TouchEvent::TouchRelease:
+	  emit touchReleaseEvent(e);
+	  break;
+
+	case TouchEvent::TouchUnknown:
+	  break;
+	}
+	delete e;
+	e=NULL;
+	istate=0;
+	break;
       }
     }
   }

@@ -89,3 +89,7 @@
 	* Added support for x86_64 architecture.
 2007-12-17 Fred Gleason <fredg@salemradiolabs.com>
 	* Incremented package version to 0.6.3.
+2014-09-13 Fred Gleason <fredg@paravelsystems.com>
+	* Cleaned up warnings in 'lib/elo_drver.cpp'.
+	* Cleaned up warnings in 'elomon/elomon.cpp'.
+	* Cleaned up warnings in 'elocal/elocal.cpp'.

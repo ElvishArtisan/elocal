@@ -108,21 +108,24 @@ MainWidget::MainWidget(QWidget *parent,const char *name)
   elo_driver->setName(qApp->argv()[qApp->argc()-1]);
   elo_driver->setSpeed(elo_speed);
   switch(elo_driver->open()) {
-      case EloDriver::NoFile:
-	QMessageBox::warning(this,"EloCal","Unable to open specified device!");
-	exiting=true;
-	return;
+  case EloDriver::Ok:
+    break;
 
-      case EloDriver::NoDevice:
-	QMessageBox::warning(this,"EloCal","Specified device does not exist!");
-	exiting=true;
-	return;
+  case EloDriver::NoFile:
+    QMessageBox::warning(this,"EloCal","Unable to open specified device!");
+    exiting=true;
+    return;
 
-      case EloDriver::NotTouchscreen:
-	QMessageBox::warning(this,"EloCal",
-			     "Specified device is not a touchscreen!");
-	exiting=true;
-	return;
+  case EloDriver::NoDevice:
+    QMessageBox::warning(this,"EloCal","Specified device does not exist!");
+    exiting=true;
+    return;
+
+  case EloDriver::NotTouchscreen:
+    QMessageBox::warning(this,"EloCal",
+			 "Specified device is not a touchscreen!");
+    exiting=true;
+    return;
   }
 
   //
@@ -188,7 +191,6 @@ void MainWidget::eventsData()
       case 6:  // Display results and exit
 	elo_istate=-1;
 	HideTarget();
-	double m,b;
 	double xslope,yslope;
 	double min_x,max_x;
 	double min_y,max_y;
@@ -246,11 +248,6 @@ void MainWidget::touchEventData(TouchEvent *e)
 	elo_istate=6;
 	break;
   }
-}
-
-
-bool MainWidget::CollectTarget(int xpos,int ypos,int *xpix,int *ypix)
-{
 }
 
 
