@@ -32,8 +32,8 @@ rpm:	dist
 	mkdir -p $(HOME)/rpmbuild/SOURCES
 	cp elocal-$(VERSION).tar.gz $(HOME)/rpmbuild/SOURCES/
 	$(RPMBUILD) -ba --target $(ARCH)-$(VENDOR)-linux elocal.spec
-	mv $(HOME)/rpmbuild/RPMS/$(ARCH)/elocal-$(VERSION)-@RPM_RELEASE@.$(ARCH).rpm $(top_srcdir)/
-	mv $(HOME)/rpmbuild/SRPMS/elocal-$(VERSION)-@RPM_RELEASE@.src.rpm $(top_srcdir)/
+	mv $(HOME)/rpmbuild/RPMS/$(ARCH)/elocal-*.rpm $(top_srcdir)/
+	mv $(HOME)/rpmbuild/SRPMS/elocal-*.src.rpm $(top_srcdir)/
 	rm $(HOME)/rpmbuild/SOURCES/elocal-$(VERSION).tar.gz
 	rm -rf $(HOME)/rpmbuild/BUILD/elocal-$(VERSION)
 

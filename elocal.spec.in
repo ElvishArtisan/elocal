@@ -21,7 +21,7 @@
 Summary: A Calibration Utility for ELO IntelliTouch Touschscreen Monitors.
 Name: elocal
 Version: @VERSION@
-Release: @RPM_RELEASE@
+Release: @RPM_RELEASE@%{?dist}
 License: GPL
 Packager: Fred Gleason <fredg@paravelsystems.com>
 Group: Hardware/Other
