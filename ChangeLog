@@ -97,3 +97,5 @@
 	* Modified 'elocal.spec.in' to include distribution ID.
 2014-09-13 Fred Gleason <fredg@paravelsystems.com>
 	* Renamed 'configure.in' to 'configure.ac'.
+2014-09-13 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 0.6.4.
